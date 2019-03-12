@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify, redirect
 from flasgger import Swagger
 from flask_cors import CORS
 
-from utils.ms_bot_framework_utils.bot import Bot
+from deeppavlov.utils.ms_bot_framework_utils.bot import Bot
 from deeppavlov.core.commands.infer import build_model
 from deeppavlov.core.common.log import get_logger
 from deeppavlov.core.common.file import read_json

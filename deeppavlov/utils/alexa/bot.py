@@ -20,8 +20,8 @@ from collections import namedtuple
 
 from OpenSSL.crypto import X509
 
-from utils.alexa.conversation import Conversation
-from utils.alexa.ssl_tools import verify_cert, verify_signature
+from deeppavlov.utils.alexa.conversation import Conversation
+from deeppavlov.utils.alexa.ssl_tools import verify_cert, verify_signature
 from deeppavlov.core.common.log import get_logger
 from deeppavlov.agents.default_agent.default_agent import DefaultAgent
 

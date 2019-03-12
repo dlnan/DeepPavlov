@@ -22,7 +22,7 @@ from deeppavlov.core.commands.utils import parse_config
 from deeppavlov.download import deep_download
 from deeppavlov.core.data.utils import get_all_elems_from_json
 from deeppavlov.core.common.paths import get_settings_path
-from utils.server_utils.server import get_server_params, SERVER_CONFIG_FILENAME
+from deeppavlov.utils.server_utils.server import get_server_params, SERVER_CONFIG_FILENAME
 
 
 tests_dir = Path(__file__).parent
