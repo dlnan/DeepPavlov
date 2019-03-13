@@ -59,7 +59,7 @@ class PersonNormalizer(Component):
                 u_toks, u_tags = self.replace_mate_gooser_name(u_toks,
                                                                u_tags,
                                                                u_state[self.state_slot])
-                if random.random() > .8:
+                if random.random() < 0.4:
                     print("Adding calling user by name")
                     u_toks = [u_state[self.state_slot], ','] + u_toks
                     u_tags = ['B-MATE-GOOSER', 'O'] + u_tags
@@ -94,7 +94,7 @@ class PersonNormalizer(Component):
                     j = 1
                     while (i + j < len(tokens)) and (tags[i + j][2:] == person_tag):
                         j += 1
-                    if (i + j == len(tokens)) or (tokens[i + j] in ',.!?;)'):
+                    if (i + j == len(tokens)) or (tokens[i + j][0] in ',.!?;)'):
                         # it is mate gooser
                         out_tags.extend([t[:2] + mate_tag for t in tags[i+1:i+j]])
                     else:
@@ -108,7 +108,7 @@ class PersonNormalizer(Component):
                     j = 1
                     while (len(out_tags) >= j) and (out_tags[-j][2:] == person_tag):
                         j += 1
-                    if (len(out_tags) < j) or (tokens[i-j] in ',.!?'):
+                    if (len(out_tags) < j) or (tokens[i-j][-1] in ',.!?('):
                         # it was mate gooser
                         for k in range(j - 1):
                             out_tags[-k-1] = out_tags[-k-1][:2] + mate_tag
@@ -325,15 +325,15 @@ class NameAskerPostprocessor(Component):
         states = states if states else [{}] * len(utters)
         for utter, hist, state, resp in zip(utters, histories, states, responses):
             state = state or {}
-            if (self.state_slot not in state) and\
-                    (self.flag_slot not in state):
+            if (self.state_slot not in state) and (self.flag_slot not in state):
+                print(f"len(history) = {len(hist)}")
                 if (len(hist) == 0) and (random.random() < 0.2):
                     new_responses.append('Привет! Тебя как зовут?')
                     state[self.flag_slot] = True
-                elif (len(hist) < 2) and (random.random() < 0.5):
+                elif (len(hist) < 5) and (random.random() < 0.5):
                     new_responses.append('Как тебя зовут?')
                     state[self.flag_slot] = True
-                elif (len(hist) >= 2) and (random.random() < 0.1):
+                elif (len(hist) >= 5) and (random.random() < 0.1):
                     new_responses.append('Тебя как зовут-то?')
                     state[self.flag_slot] = True
                 else:
